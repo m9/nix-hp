@@ -27,12 +27,16 @@ in
 
   security.sudo.wheelNeedsPassword = false; 
  
+
+  # Enable Incus
+  virtualisation.incus.enable = true;
+  
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.root.hashedPassword = "!";
 
   users.users.m0s = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel", "incus-admin" ]; 
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID6ANoef4hQv7AI4PzS9jmMP6goacQ8FVcHXwqauVLHF serhii@balbieko.com" ];
     packages = with pkgs; [
       tree
