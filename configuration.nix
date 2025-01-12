@@ -1,16 +1,19 @@
 { config, lib, pkgs, ... }:
-
+let
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
+in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      (import "${home-manager}/nixos")
     ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "hyper.uah.me"; # Define your hostname.
+  networking.hostName = "hyper"; # Define your hostname.
 
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -26,6 +29,7 @@
  
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.root.hashedPassword = "!";
+
   users.users.m0s = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
@@ -34,6 +38,34 @@
       tree
       vim
     ];
+  };
+
+  home-manager.users.root = { pkgs, ...}: {
+    home.packages = [
+      pkgs.git
+    ];
+
+    programs.git = {
+      enable = true;
+      userName  = "Serhii Balbieko";
+      userEmail = "serhii@balbieko.com";
+    };
+
+    home.stateVersion = "24.11";
+  };
+
+  home-manager.users.m0s = { pkgs, ...}: {
+    home.packages = [
+      pkgs.git
+    ];
+
+    programs.git = {
+      enable = true;
+      userName  = "Serhii Balbieko";
+      userEmail = "serhii@balbieko.com";
+    };
+
+    home.stateVersion = "24.11";
   };
 
   # List packages installed in system profile. To search, run:
