@@ -36,7 +36,10 @@ in
 
   users.users.m0s = {
     isNormalUser = true;
-    extraGroups = [ "wheel", "incus-admin" ]; 
+    extraGroups = [ 
+      "wheel"
+      "incus-admin" 
+    ]; 
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID6ANoef4hQv7AI4PzS9jmMP6goacQ8FVcHXwqauVLHF serhii@balbieko.com" ];
     packages = with pkgs; [
       tree
